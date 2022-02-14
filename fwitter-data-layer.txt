@@ -1,0 +1,54 @@
+Fwitter data layer
+https://docs.fauna.com/fauna/current/start/apps/fwitter.html
+
+accounts
+- email
+- password
+- user
+
+fweets
+- original (for refweets)
+- message (has hashtags in it)
+- author
+- hashtags
+- asset
+-- id
+-- url
+-- type (image|video)
+-- cloudName
+- likes
+- refweets
+- comments
+- created (datetime)
+
+users (profiles)
+- name
+- alias|handle
+- icon
+
+hashtag
+- name
+
+fweetstats
+- user
+- fweet
+- like
+- refweet
+- comment
+
+followerstats
+- postlikes
+- postrefweets
+- author
+- follower
+
+comments
+- message
+- author
+- fweet	
+
+rate_limiting
+- action
+- identity
+
+searching indexes

@@ -1,0 +1,205 @@
+How I might break down the twitter api into domains/models
+
+Tweet
+- id
+- text
+- created_at
+- author_id
+- conversation_id
+- in_reply_to_user_id
+- referenced_tweets (array)
+- referenced_tweets.type (enum: retweeted, quoted, replied_to)
+- referenced_tweets.id (string)
+- attachments (object)
+- attachments.media_keys (array)
+- attachments.poll_id (array)
+- geo (object)
+- geo.coordinates (object)
+- geo.coordinates.type (string)
+- geo.coordinates.coordinates (array, pair of decimal values: latitude, longitude)
+- geo.place_id (string)
+// context_annotations is likely dynamic that pulls in the domain and the entity object from their own tables.
+- context_annotations.domain_id
+- context_annotations.entity_id (this may or may not be different than the annotations linked to the entity_id field below)
+- entities_id
+- possibly_sensitive
+- lang
+- reply_settings
+- source
+- withheld_id
+
+Conversation
+- id 
+// could reference participants here? potentially for quote tweets?
+
+Place
+- id
+- name
+
+- Domain
+- id
+- name
+- description
+
+Annotation
+- id
+- start
+- end
+- probability
+- type
+- normalized_text
+
+Url
+- id
+- start
+- end
+- url
+- expanded_url
+- display_url
+- unwound_url
+
+Hashtag
+- id
+- start
+- end
+- tag
+
+Mention
+- id
+- start
+- end
+- username
+
+Cashtag
+- id
+- start
+- end
+- tag
+
+// Entities are a whole thing. Not sure if a separate database or just something to shard on. Could also be completely dynamic data pulled together on demand. I'm going to model it as a part of the current database but I'm not convinced that's where it lives.
+Entity
+- id
+- name
+- description
+
+Entities_Annotations (join table)
+- entity_id
+- annotation_id
+
+Entities_Urls (join table)
+- entity_id
+- url_id
+
+Entities_Hashtags (join table)
+- entity_id
+- hashtag_id
+
+Entities_Mentions (join table)
+- entity_id
+- mention_id
+
+Entities_Cashtags (join table)
+- entity_id
+- cashtag_id
+
+Potentially eliminate those join tables with a polymorphic one:
+Entities_PolymorphicJoins (join table: Entities -> [annotations|urls|hashtags|mentions|cashtags])
+- entity_id
+- join_type
+- join_id
+
+Withheld
+- copyright
+- country_codes
+- scope
+
+You could go either way with putting the metrics directly on the tweet or moving them out to their own table(s). Because metrics are constantly being adjusted you'll have to do row-locking or transactions on the affected rows. If it's in the tweet itself this might make it hard to update the tweet itself when the user wants it updated (which wouldn't affect metrics gathering). This is kind of a nuanced issue because Twitter doesn't allow users to edit tweets (due to systems architecture) so that's not relevant here but there are other ways for the tweet to be updated, like machine-added annotations. I'm going to choose to put them in their own tables because of the near-constant stream of writes/updates for a popular tweet.
+
+Public Metrics
+- tweet_id
+- retweet_count
+- reply_count
+- like_count
+- quote_count
+
+Non Public Metrics
+- tweet_id
+- impression_count
+- url_link_clicks
+- user_profile_clicks
+
+Organic Metrics
+- tweet_id
+- impression_count
+- url_link_clicks
+- user_profile_clicks
+- retweet_count
+- reply_count
+- like_count
+
+Promoted Metrics
+- tweet_id
+- impression_count
+- url_link_clicks
+- user_profile_clicks
+- retweet_count
+- reply_count
+- like_count
+
+Includes_PolymorphicJoins (join table: Includes -> [tweets|users|places|media|polls)
+- tweet_id
+- join_type
+- join_id
+
+Users
+- id
+- name
+- username
+- created_at
+- description
+- location
+- pinned_tweet_id
+- profile_image_url
+- protected
+- url
+- verified
+- withheld
+
+Users Public Metrics
+- user_id
+- followers_count
+- following_count
+- tweet_count
+- listed_count
+- withheld_id
+
+Follows (join table)
+- follower_id (user)
+- followed_id (user)
+// you could add more context about when they were followed here if you cared
+
+Blocks (join table)
+- blocker_id (user)
+- blocked_id (user)
+- created_at
+// you could add more context about when they were blocked here if you cared
+
+Mutes (join table)
+- muter_id (user)
+- muted_id (user)
+// you could add more context about when they were muted here if you cared
+
+Likes
+- tweet_id
+- user_id
+- created_at
+
+Retweets
+- tweet_id
+- user_id
+- created_at
+
+
+
+
+

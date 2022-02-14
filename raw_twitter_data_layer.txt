@@ -1,0 +1,173 @@
+Twitter data layer
+
+Tweets
+https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets-id
+- id (string)
+- text (string)
+- created_at (date ISO 8601)
+- author_id (string)
+- conversation_id (string)
+- in_reply_to_user_id (string)
+- referenced_tweets (array)
+- referenced_tweets.type (enum: retweeted, quoted, replied_to)
+- referenced_tweets.id (string)
+- attachments (object)
+- attachments.media_keys (array)
+- attachments.poll_id (array)
+- geo (object)
+- geo.coordinates (object)
+- geo.coordinates.type (string)
+- geo.coordinates.coordinates (array, pair of decimal values: latitude, longitude)
+- geo.place_id (string)
+- context_annotations (array)
+- context_annotations.domain (object)
+- context_annotations.domain.id (string)
+- context_annotations.domain.name (string)
+- context_annotations.domain.description (string)
+- context_annotations.entity (object)
+- context_annotations.entity.id (string)
+- context_annotations.entity.name (string)
+- context_annotations.entity.description (string)
+- entities (object)
+- entities.annotations (array)
+- entities.annotations.start (integer)
+- entities.annotations.end (integer)
+- entities.annotations.probability (number)
+- entities.annotations.type (string)
+- entities.annotations.normalized_text (string)
+- entities.urls (array)
+- entities.urls.start (integer)
+- entities.urls.end (integer)
+- entities.urls.url (string)
+- entities.urls.expanded_url (string)
+- entities.urls.display_url (string)
+- entities.urls.unwound_url (string)
+- entities.hashtags (array)
+- entities.hashtags.start (integer)
+- entities.hashtags.end (integer)
+- entities.hashtags.tag (string)
+- entities.mentions (array)
+- entities.mentions.start (integer)
+- entities.mentions.end (integer)
+- entities.mentions.username (string)
+- entities.cashtags (array)
+- entities.cashtags.start (integer)
+- entities.cashtags.end (integer)
+- entities.cashtags.tag (string)
+- withheld (object)
+- withheld.copyright (boolean)
+- withheld.country_codes (array)
+- withheld.scope (enum: tweet, user)
+- public_metrics (object)
+- public_metrics.retweet_count (integer)
+- public_metrics.reply_count (integer)
+- public_metrics.like_count (integer)
+- public_metrics.quote_count (integer)
+- non_public_metrics (object)
+- non_public_metrics.impression_count (integer)
+- non_public_metrics.url_link_clicks (integer)
+- non_public_metrics.user_profile_clicks (integer)
+- organic_metrics (object)
+- organic_metrics.impression_count (integer)
+- organic_metrics.url_link_clicks (integer)
+- organic_metrics.user_profile_clicks (integer)
+- organic_metrics.retweet_count (integer)
+- organic_metrics.reply_count (integer)
+- organic_metrics.like_count (integer)
+- promoted_metrics (object)
+- promoted_metrics.impression_count (integer)
+- promoted_metrics.url_link_clicks (integer)
+- promoted_metrics.user_profile_clicks (integer)
+- promoted_metrics.retweet_count (integer)
+- promoted_metrics.reply_count (integer)
+- promoted_metrics.like_count (integer)
+- possibly_sensitive (boolean)
+- lang (string)
+- reply_settings (string: everyone, mentionedUsers, following)
+- source (string)
+- includes (object)
+- includes.tweets (array)
+- includes.users (array)
+- includes.places (array)
+- includes.media (array)
+- includes.polls (string)
+- errors (object) (this is probably just for the transport layer)
+
+Users
+https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/user
+- id (string)
+- name (string)
+- username (string)
+- created_at (date: ISO 8601)
+- description (string)
+- entities (object)(Contains details about text that has a special meaning in the user's description.)
+- location (string)
+- pinned_tweet_id (string)
+- profile_image_url (string)
+- protected (boolean)
+- public_metrics (object)
+-- followers_count (integer)
+-- following_count (integer)
+-- tweet_count (integer)
+-- listed_count (integer)
+- url (string)
+- verified (boolean)
+- withheld (object)
+
+Follows
+- follower_id
+- pinned_tweet_id
+- id
+- username
+- name
+
+Blocks
+- blocker_id
+- id
+- created_at
+- name
+- pinned_tweet_id
+- description
+- username
+
+Mutes
+- muter_id
+- muting_id (target_user_id)
+
+Likes
+- tweet_id
+- user_id
+- created_at
+- name
+- pinned_tweet_id
+- description
+- username
+
+Retweets
+- tweet_id
+- user_id
+- created_at
+- name
+- pinned_tweet_id
+- description
+- username
+
+Timelines
+Pre-computed arrays of tweets:
+- most recent Tweets composed by a specified user ID
+- most recent Tweets mentioning a specified user ID
+
+Hide Replies
+Setting a `hidden` boolean on a tweet
+
+Search Tweets
+Search recent or search all
+
+Tweet Counts
+This is about the number of tweets that match a search term
+
+Filtered Stream
+Filtering the public stream of tweets
+
+Sampled Stream
+Returns a 1% random sample of public tweets

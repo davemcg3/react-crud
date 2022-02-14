@@ -1,0 +1,19 @@
+1. Move TagRead -> Conversation
+2. Delete TagsCreate
+3. Simplify, clean up
+
+Links to reference
+https://docs.mongodb.com/realm/web/graphql-apollo-react/
+https://github.com/mongodb-university/realm-graphql-apollo-react
+https://www.mongodb.com/cloud?nStitch=https%3A%2F%2Frealm.mongodb.com%2Fgroups%2F608ba8a320e2ea47e28ca10a%2Fapps%2F608baa8e91df81692a56e388%2Flogs
+https://account.mongodb.com/account/login?n=%2Fv2%2F608ba8a320e2ea47e28ca10a%23metrics%2FreplicaSet%2F610197e17919e01e73b0b14a%2Fexplorer%2Fapollo-crud%2FConversations%2Ffind
+https://docs.mongodb.com/v5.0/reference/method/db.collection.findOneAndUpdate/
+https://stackoverflow.com/questions/16358857/mongodb-atomic-findorcreate-findone-insert-if-nonexistent-but-do-not-update
+https://docs.mongodb.com/realm/mongodb/find-documents/
+https://github.com/Automattic/mongoose/issues/7108
+https://github.com/mongodb/stitch-examples/blob/master/blog-comments-simple/README.md
+https://stackoverflow.com/questions/57696774/setstate-not-re-rendering-react-component-inside-array
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+https://stackoverflow.com/questions/51338277/async-function-returning-promise-instead-of-value
+https://stackoverflow.com/questions/60375517/usestate-with-async-function-returning-promise-pending
+https://stackoverflow.com/questions/7713363/mongodb-select-where-in-array-of-id
